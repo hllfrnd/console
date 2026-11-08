@@ -2,13 +2,11 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Случайные находки и скрытые места">
-<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
-<meta http-equiv="X-Content-Type-Options" content="nosniff">
-<meta http-equiv="Referrer-Policy" content="no-referrer">
-<title>☉ Hello Friend — Portal</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#050506">
+<title>☉ Hello Friend — Console</title>
 <script>
 (function(){
   try{
@@ -23,180 +21,174 @@
 </script>
 <style>
 :root{
-  --bg:#f6f6f7;
-  --bg-grad:linear-gradient(135deg,#ffffff 0%,#f0f1f3 100%);
-  --fg:#111113;
-  --accent:#111113;
-  --accent-hover:#000000;
-  --toast-bg:#ffffff;
-  --toast-fg:#111113;
-  --toast-shadow:0 10px 30px rgba(0,0,0,.08);
-  --toast-border:rgba(0,0,0,.06);
-  --hint-bg:rgba(255,255,255,.72);
-  --hint-border:rgba(0,0,0,.06);
-  --hint-fg:#5f5f66;
-  --progress-bg:rgba(0,0,0,.06);
-  --progress-fill:#111113;
-  --link-color:#1a73e8;
+  --bg:#f6f6f7;--fg:#111113;--dim:#5f5f66;--mute:#9a9aa1;
+  --line:#e6e6ea;--line2:#d2d2d8;
+  --green:#0f9d58;--red:#d93025;--orange:#c77d00;--blue:#1a73e8;
+  --term-bg:#ffffff;--term-bar:#fafafa;
+  --input-bg:#ffffff;--input-border:#d2d2d8;
+  --shadow:0 20px 40px -20px rgba(0,0,0,.12);
 }
 [data-theme="dark"]{
-  --bg:#050506;
-  --bg-grad:radial-gradient(120% 80% at 50% 0%, #101013 0%, #050506 100%);
-  --fg:#ececf0;
-  --accent:#ececf0;
-  --accent-hover:#ffffff;
-  --toast-bg:#111114;
-  --toast-fg:#ececf0;
-  --toast-shadow:0 10px 30px rgba(0,0,0,.6);
-  --toast-border:rgba(255,255,255,.08);
-  --hint-bg:rgba(17,17,20,.72);
-  --hint-border:rgba(255,255,255,.08);
-  --hint-fg:#9a9aa2;
-  --progress-bg:rgba(255,255,255,.08);
-  --progress-fill:#ececf0;
-  --link-color:#7cc7ff;
+  --bg:#050506;--fg:#ececf0;--dim:#9a9aa2;--mute:#4a4a52;
+  --line:#181820;--line2:#27272f;
+  --green:#46d68a;--red:#ff5a5a;--orange:#ffab3d;--blue:#7cc7ff;
+  --term-bg:#08080a;--term-bar:#060608;
+  --input-bg:#0b0b0f;--input-border:#27272f;
+  --shadow:0 30px 80px -40px rgba(124,199,255,.28);
 }
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-html{height:100%}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;background:var(--bg)}
 body{
-  background:var(--bg-grad);background-color:var(--bg);
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
-  display:flex;flex-direction:column;justify-content:center;align-items:center;
-  min-height:100vh;min-height:100dvh;text-align:center;color:var(--fg);overflow-x:hidden;
-  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
-  transition:background-color .4s ease,color .4s ease;
-  animation:fadeIn 1.2s ease-out both;
+  min-height:100dvh;color:var(--fg);
+  font-family:ui-monospace,"SF Mono","Cascadia Code",Menlo,Consolas,"Courier New",monospace;
+  font-size:clamp(12.5px,3.4vw,14.5px);line-height:1.55;
+  -webkit-font-smoothing:antialiased;overflow:hidden;
+  transition:background-color .35s ease,color .35s ease;
 }
+::selection{background:#10222f;color:var(--blue)}
+.app{height:100dvh;display:flex;flex-direction:column;max-width:820px;margin:0 auto;
+  padding:clamp(10px,2.5vw,20px);gap:clamp(8px,2vw,14px);position:relative}
 
 /* === Унифицированный переключатель темы === */
 .theme-toggle{
   position:absolute;
-  top:calc(1rem + env(safe-area-inset-top, 0px));
-  right:calc(1rem + env(safe-area-inset-right, 0px));
+  top:calc(clamp(10px,2.5vw,20px) + env(safe-area-inset-top, 0px));
+  right:calc(clamp(12px,4vw,24px) + env(safe-area-inset-right, 0px));
   width:40px;height:40px;
   display:inline-flex;align-items:center;justify-content:center;
-  background:var(--hint-bg);
-  border:1px solid var(--hint-border);
+  background:var(--term-bar);
+  border:1px solid var(--line2);
   color:var(--fg);
   border-radius:50%;
   font-size:1.05rem;line-height:1;
   cursor:pointer;
   z-index:100;
-  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
   transition:background-color .2s ease,border-color .2s ease,color .2s ease,transform .2s ease;
   -webkit-tap-highlight-color:transparent;
   touch-action:manipulation;
 }
-.theme-toggle:hover{background:var(--bg);border-color:var(--fg)}
+.theme-toggle:hover{background:var(--term-bg);border-color:var(--fg)}
 .theme-toggle:active{transform:scale(.94)}
-.theme-toggle:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.theme-toggle:focus-visible{outline:2px solid var(--green);outline-offset:3px}
 
-.symbol{
-  display:inline-flex;align-items:center;justify-content:center;width:96px;height:96px;
-  margin-bottom:1rem;padding:0;font-size:3rem;line-height:1;color:var(--accent);
-  text-shadow:0 3px 8px rgba(0,0,0,.08);cursor:pointer;user-select:none;
-  -webkit-tap-highlight-color:transparent;border:0;border-radius:50%;background:transparent;
-  transition:transform .2s ease,color .2s ease,box-shadow .2s ease,opacity .2s ease;
-  animation:pulse 4s infinite ease-in-out;touch-action:manipulation;
-}
-.symbol:hover{color:var(--accent-hover);box-shadow:0 6px 20px rgba(0,0,0,.08)}
-.symbol:active{transform:scale(.92);transition-duration:.08s}
-.symbol:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
-.symbol[aria-disabled="true"],.symbol.is-busy{
-  cursor:default;opacity:.5;animation:none;pointer-events:none;text-shadow:none;
-}
-h1{
-  font-size:clamp(1.05rem,3.2vw,1.45rem);font-weight:800;letter-spacing:.32em;
-  text-transform:uppercase;color:var(--accent);user-select:none;pointer-events:none;
-  transition:color .4s ease;
-}
-.toast-stack{
-  position:fixed;left:50%;bottom:2rem;transform:translateX(-50%);
-  display:flex;flex-direction:column;align-items:stretch;gap:.6rem;
-  width:min(92vw,440px);z-index:9999;pointer-events:none;
-}
-.toast{
-  position:relative;display:flex;align-items:center;gap:.6rem;width:100%;
-  padding:.85rem 1.25rem;font-size:.9rem;line-height:1.3;color:var(--toast-fg);
-  background:var(--toast-bg);border:1px solid var(--toast-border);border-radius:12px;
-  box-shadow:var(--toast-shadow);opacity:0;transform:translateY(1.5rem);
-  pointer-events:none;transition:opacity .3s ease,transform .3s ease,
-    background-color .4s ease,border-color .4s ease;overflow:hidden;
-  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
-}
-.toast.is-visible{opacity:1;transform:translateY(0)}
-.toast--main.is-visible{pointer-events:auto}
-.toast--main.is-cancelable{cursor:pointer}
-.toast--description{background:var(--hint-bg);font-size:.82rem;padding:.7rem 1rem;align-items:flex-start}
-.toast--description.is-visible{pointer-events:none}
-.toast--description .toast__icon{font-size:.95rem;margin-top:.1rem}
-.toast__icon{flex-shrink:0;font-size:1.1rem}
-.toast__text{min-width:0;overflow-wrap:break-word;word-break:break-word}
-.toast__text a{color:var(--link-color);text-decoration:underline;text-underline-offset:2px;pointer-events:auto}
-.toast__progress{position:absolute;left:0;bottom:0;height:3px;width:100%;background:var(--progress-bg)}
-.toast__progress::after{
-  content:"";position:absolute;inset:0;background:var(--progress-fill);
-  transform-origin:left center;transform:scaleX(1);
-}
-.toast.is-visible .toast__progress::after{animation:shrinkBar var(--toast-duration,8000ms) linear forwards}
-.toast.is-canceled .toast__progress::after{animation:none;transform:scaleX(0)}
-.hint{
-  display:flex;align-items:center;justify-content:center;gap:.4rem;width:100%;
-  margin-top:.15rem;padding:.5rem .9rem;font-size:.75rem;line-height:1.3;
-  color:var(--hint-fg);text-align:center;background:var(--hint-bg);
-  border:1px solid var(--hint-border);border-radius:10px;
-  box-shadow:0 4px 14px rgba(0,0,0,.04);
-  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
-  pointer-events:none;user-select:none;
-  transition:background-color .4s ease,color .4s ease,border-color .4s ease;
-}
-.hint--action{color:var(--accent);font-size:.78rem}
-.hint__icon{flex-shrink:0;font-size:.9rem;line-height:1}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-@keyframes pulse{0%,100%{transform:scale(1);opacity:.85}50%{transform:scale(1.05);opacity:1}}
-@keyframes shrinkBar{from{transform:scaleX(1)}to{transform:scaleX(0)}}
+.head{display:flex;flex-direction:column;align-items:center;gap:4px;user-select:none;
+  padding:2px 4px 4px;margin-top:10px}
+.head .logo{font-size:clamp(40px,11vw,58px);font-weight:900;color:var(--fg);line-height:1;
+  text-shadow:0 0 24px rgba(124,199,255,.12);animation:breathe 5s ease-in-out infinite}
+@keyframes breathe{0%,100%{opacity:.78;transform:scale(1)}50%{opacity:1;transform:scale(1.03)}}
+.head h1{margin:2px 0 0;font-size:clamp(18px,5.8vw,26px);font-weight:900;
+  letter-spacing:.28em;text-transform:uppercase;color:var(--fg)}
+.head h1 span{color:var(--blue)}
+
+.status{display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  padding:8px 12px;border:1px solid var(--line);border-radius:12px;
+  background:var(--term-bar);font-size:.76em;user-select:none;
+  transition:background-color .35s ease,border-color .35s ease}
+.status .k{color:var(--mute);text-transform:uppercase;letter-spacing:.14em}
+.status .v{color:var(--fg);font-weight:800}
+.status .v.green{color:var(--green)}
+.status .v.red{color:var(--red)}
+.status .v.blue{color:var(--blue)}
+.status .v.orange{color:var(--orange)}
+.status .sep{color:var(--mute)}
+
+.term{flex:1 1 auto;display:flex;flex-direction:column;
+  border:1px solid var(--line2);border-radius:18px;
+  background:radial-gradient(140% 60% at 50% 0%,rgba(124,199,255,.05),transparent 55%),var(--term-bg);
+  overflow:hidden;box-shadow:var(--shadow);min-height:0;
+  transition:background .35s ease,border-color .35s ease}
+.bar{display:flex;align-items:center;gap:10px;padding:10px 14px;
+  border-bottom:1px solid var(--line);background:var(--term-bar);user-select:none;
+  transition:background-color .35s ease,border-color .35s ease}
+.dots{display:flex;gap:6px}
+.dot{width:9px;height:9px;border-radius:50%}
+.dot.a{background:#3a2020}.dot.b{background:#3a3520}.dot.c{background:#203a2a}
+.bar .host{margin-left:auto;font-size:.72em;letter-spacing:.14em;color:var(--dim);
+  text-transform:uppercase;font-weight:800}
+.bar .host b{color:var(--red);font-weight:900}
+.bar .host.local b{color:var(--green)}
+
+.screen{flex:1 1 auto;overflow-y:auto;padding:clamp(12px,3vw,18px);
+  font-size:.95em;line-height:1.6;scroll-behavior:smooth;overscroll-behavior:contain;min-height:0}
+.screen::-webkit-scrollbar{width:7px}
+.screen::-webkit-scrollbar-thumb{background:var(--line2);border-radius:4px}
+
+.line{white-space:pre-wrap;word-break:break-word;margin:0 0 5px}
+.line.cmd{color:var(--fg);font-weight:700}
+.line.cmd::before{content:"$ ";color:var(--green);font-weight:900}
+.line.dim{color:var(--dim)}
+.line.err{color:var(--red)}
+.line.warn{color:var(--orange)}
+.line.ok{color:var(--green)}
+.line.blue{color:var(--blue)}
+.line.head{color:var(--fg);font-weight:900}
+.line a{color:var(--blue);text-decoration:none;border-bottom:1px dotted var(--blue);word-break:break-all}
+.loading{color:var(--mute);font-style:italic}
+.loading::after{content:"";display:inline-block;width:.55em;height:.55em;margin-left:6px;
+  border:1.5px solid var(--line2);border-top-color:var(--blue);border-radius:50%;
+  animation:spin .7s linear infinite;vertical-align:-1px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.input-row{display:flex;align-items:center;gap:10px;border-top:2px solid var(--line2);
+  background:var(--term-bar);padding:12px clamp(12px,3vw,16px);
+  transition:background-color .35s ease,border-color .35s ease}
+.ps1{color:var(--green);font-weight:900;user-select:none;font-size:1.05em;white-space:nowrap}
+.ps1 .u{color:var(--blue)}.ps1 .h{color:var(--red)}.ps1 .h.local{color:var(--green)}
+.ps1 .r{color:var(--orange)}
+#input{flex:1 1 auto;min-height:44px;background:var(--input-bg);border:1px solid var(--input-border);
+  border-radius:10px;outline:0;color:var(--fg);font:inherit;font-weight:700;letter-spacing:.01em;
+  padding:0 12px;caret-color:var(--green);
+  transition:border-color .15s,box-shadow .15s,background-color .35s ease,color .35s ease}
+#input:focus{border-color:var(--green);box-shadow:0 0 0 2px rgba(70,214,138,.15)}
+#input::placeholder{color:var(--mute);font-weight:400}
+#send{min-height:44px;min-width:48px;background:rgba(70,214,138,.08);
+  border:1px solid var(--green);color:var(--green);border-radius:10px;
+  font:inherit;font-weight:900;padding:0 14px;cursor:pointer;
+  transition:background .15s,transform .1s}
+#send:hover{background:rgba(70,214,138,.18)}
+#send:active{transform:scale(.97)}
+#send[disabled]{opacity:.35;cursor:default}
+
+@media (max-width:380px){.head h1{letter-spacing:.2em}.ps1{font-size:.92em}}
 @media (prefers-reduced-motion:reduce){
-  body,.symbol{animation:none}
-  .symbol{transition:none}
-  .toast{transition:opacity .15s ease}
-  .toast.is-visible .toast__progress::after{animation:none;transform:scaleX(1)}
-}
-@media (max-width:360px){
-  .toast-stack{bottom:1.25rem;gap:.5rem}
-  .hint{font-size:.7rem;padding:.45rem .7rem}
+  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
 }
 </style>
 </head>
 <body>
+<div class="app">
+  <button type="button" class="theme-toggle" id="themeToggle" aria-label="Переключить тему" aria-pressed="false">◐</button>
 
-<button type="button" class="theme-toggle" id="themeToggle" aria-label="Переключить тему" aria-pressed="false">◐</button>
-
-<button type="button" class="symbol" id="magicSymbol" aria-label="Открыть случайную ссылку">☉</button>
-<h1>Hello Friend</h1>
-
-<div class="toast-stack">
-  <div id="toast" class="toast toast--main" role="alert" aria-live="assertive" aria-atomic="true">
-    <span class="toast__icon" aria-hidden="true">🔗</span>
-    <span class="toast__text" id="toastText"></span>
-    <span class="toast__progress" aria-hidden="true"></span>
+  <div class="head">
+    <div class="logo">☉</div>
+    <h1>HELLO <span>FRIEND</span></h1>
   </div>
-  <div id="toastDesc" class="toast toast--description" role="status" aria-live="polite" aria-atomic="true">
-    <span class="toast__icon" aria-hidden="true">📝</span>
-    <span class="toast__text" id="toastDescText"></span>
+
+  <div class="status">
+    <span class="k">host</span><span class="v red" id="s-host">void</span>
+    <span class="sep">·</span>
+    <span class="k">user</span><span class="v blue" id="s-user">anon</span>
+    <span class="sep">·</span>
+    <span class="k">path</span><span class="v" id="s-path">/home/anon</span>
+    <span class="sep">·</span>
+    <span class="k">state</span><span class="v orange" id="s-state">recon</span>
   </div>
-  <p class="hint hint--action" role="note">
-    <span class="hint__icon" aria-hidden="true">☉</span>
-    <span>нажми на символ — откроется случайная ссылка</span>
-  </p>
-  <p class="hint" role="note">
-    <span class="hint__icon" aria-hidden="true">🛡️</span>
-    <span>если сайт не загружается — включи VPN</span>
-  </p>
+
+  <div class="term">
+    <div class="bar">
+      <div class="dots"><span class="dot a"></span><span class="dot b"></span><span class="dot c"></span></div>
+      <span class="host" id="bar-host"><b>anon@void</b></span>
+    </div>
+    <div class="screen" id="screen" role="log" aria-live="polite"></div>
+    <form class="input-row" id="form" autocomplete="off">
+      <span class="ps1" id="ps1"><span class="u">anon</span>@<span class="h">void</span>:~$</span>
+      <input id="input" name="cmd" type="text" inputmode="text" autocapitalize="off"
+             autocorrect="off" spellcheck="false" enterkeyhint="send"
+             placeholder="type a command…" aria-label="command">
+      <button id="send" type="submit" aria-label="send">↵</button>
+    </form>
+  </div>
 </div>
-
-<noscript>
-  <p style="margin-top:1.5rem;font-size:.9rem;color:var(--hint-fg);">Требуется JavaScript.</p>
-</noscript>
 
 <script>
 (() => {
@@ -218,295 +210,940 @@ themeToggle.addEventListener('click', () => {
   applyTheme();
 });
 
-const rawLinks = [
-  { url: "https://radio.garden", description: "Глобус с радиостанциями мира" },
-  { url: "https://dinosaurpictures.org/ancient-earth", description: "Интерактивная модель истории Земли" },
-  { url: "https://pastvu.com", description: "Исторические фотографии на карте" },
-  { url: "https://lightningmaps.org", description: "Карта молний в реальном времени" },
-  { url: "https://quickdraw.withgoogle.com", description: "Игра Google по распознаванию рисунков" },
-  { url: "https://paint.toys", description: "Коллекция инструментов для рисования" },
-  { url: "https://old-games.ru", description: "Архив старых игр" },
-  { url: "https://vidachestvo.ru", description: "История техники телевидения и видеозаписи" },
-  { url: "https://windows93.net", description: "Веб-ОС в стиле пародии на Windows" },
-  { url: "https://webamp.org", description: "Веб-версия Winamp" },
-  { url: "https://imcdb.org", description: "База данных автомобилей в фильмах" },
-  { url: "https://eurobricks.com", description: "Форум для фанатов LEGO" },
-  { url: "https://brusheezy.com", description: "Бесплатные кисти для Photoshop" },
-  { url: "https://jstor.org", description: "Библиотека научных статей" },
-  { url: "https://zoomquilt.org", description: "Бесконечно приближающаяся картина" },
-  { url: "https://neal.fun", description: "Интерактивные мини-проекты" },
-  { url: "https://maze.toys", description: "Коллекция лабиринтов" },
-  { url: "https://monkeytype.com", description: "Минималистичный тренажёр печати" },
-  { url: "https://orteil.dashnet.org/cookieclicker", description: "Классическая Cookie Clicker" },
-  { url: "https://tosdr.org", description: "Рейтинг условий обслуживания" },
-  { url: "https://antropogenez.ru", description: "Проект о происхождении человека" },
-  { url: "https://ourworldofpixels.com", description: "Бесконечный холст для пиксель-арта" },
-  { url: "https://jspaint.app", description: "Клон MS Paint" },
-  { url: "https://savethesounds.info", description: "Музей исчезающих звуков техники" },
-  { url: "https://checkboxrace.com", description: "Гонка с чекбоксами" },
-  { url: "https://www.nytimes.com/games/wordle", description: "Wordle — угадай слово" },
-  { url: "https://oskarstalberg.com/Townscaper", description: "Городской конструктор" },
-  { url: "https://userinyerface.com", description: "Худший интерфейс в мире" },
-  { url: "https://vivirenremoto.github.io/doomcaptcha", description: "DOOM вместо капчи" },
-  { url: "https://bongo.cat", description: "Кот играет на бонго" },
-  { url: "https://3.14-pi.net", description: "Число Пи, где каждой цифре соответствует звук" },
-  { url: "https://oshimaland.com", description: "Карта заброшенных домов по всему миру" },
-  { url: "https://midomi.com", description: "Поиск песни по напеву или мелодии" },
-  { url: "https://astronaut.io", description: "Случайные видео с YouTube без просмотров" },
-  { url: "https://buttonbass.com", description: "Создание музыки из интерактивных кубиков" },
-  { url: "https://centennialbulb.org", description: "Трансляция с лампочки, горящей с 1901 года" },
-  { url: "https://classic.minecraft.net", description: "Minecraft Classic в браузере" },
-  { url: "https://driveandlisten.app", description: "Виртуальная поездка по городам под местное радио" },
-  { url: "https://abbeyroad.com/crossing", description: "Веб-камера перехода с обложки Beatles" },
-  { url: "https://allcalc.ru/node/56", description: "Калькулятор длины волос и ногтей" },
-  { url: "https://books.google.com/ngrams", description: "График частоты слов в книгах с 1700 года" },
-  { url: "https://privnote.com", description: "Самоуничтожающиеся сообщения" },
-  { url: "https://rifme.net", description: "Генератор рифм к русским словам" },
-  { url: "https://seatguru.com", description: "Выбор места в самолёте" },
-  { url: "https://playback.fm/birthday-song", description: "Песня №1 в день вашего рождения" }
-];
+const $ = id => document.getElementById(id);
+const screenEl = $("screen");
+const input = $("input");
+const form = $("form");
+const sendBtn = $("send");
+const ps1 = $("ps1");
+const barHost = $("bar-host");
+const sHost = $("s-host");
+const sUser = $("s-user");
+const sPath = $("s-path");
+const sState = $("s-state");
 
-const ALLOWED_PROTOCOLS = new Set(["https:", "http:"]);
-const MAX_URL_LENGTH = 2048;
-const REDIRECT_DELAY = 5000;
-const CANCEL_WINDOW = REDIRECT_DELAY + 3000;
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 
-const isValidUrl = (value) => {
-  if (typeof value !== "string") return false;
-  const trimmed = value.trim();
-  if (trimmed === "" || trimmed.length > MAX_URL_LENGTH) return false;
-  try { return ALLOWED_PROTOCOLS.has(new URL(trimmed).protocol); }
-  catch { return false; }
-};
-
-const seen = new Set();
-const links = Object.freeze(
-  rawLinks
-    .filter((item) => item && isValidUrl(item.url))
-    .map((item) => Object.freeze({
-      url: item.url.trim(),
-      description: (item.description || "").trim()
-    }))
-    .filter((item) => {
-      if (seen.has(item.url)) return false;
-      seen.add(item.url);
-      return true;
-    })
-);
-
-const symbol = document.getElementById("magicSymbol");
-const toast = document.getElementById("toast");
-const toastText = document.getElementById("toastText");
-const toastDesc = document.getElementById("toastDesc");
-const toastDescText = document.getElementById("toastDescText");
-
-if (!symbol) return;
-
-if (links.length === 0) {
-  symbol.setAttribute("aria-disabled", "true");
-  symbol.setAttribute("aria-label", "Ссылки недоступны");
-  symbol.setAttribute("tabindex", "-1");
-  symbol.setAttribute("disabled", "");
-  return;
+const FS = {};
+function mkdir(path, owner="anon", mode="755"){
+  FS[path] = { type:"dir", content:[], owner, mode, mtime: Date.now() };
+}
+function write(path, content, owner="anon", mode="644", note){
+  const parts = path.split("/").filter(Boolean);
+  const name = parts.pop();
+  const parent = "/" + parts.join("/");
+  if (!FS[parent]) mkdir(parent);
+  if (!FS[parent].content.includes(name)) FS[parent].content.push(name);
+  FS[path] = { type:"file", content, owner, mode, mtime: Date.now(), note };
 }
 
-let toastTimer = 0;
-let redirectTimer = 0;
-let countdownTimer = 0;
-let descTimer = 0;
-let lastIndex = -1;
-let isOpening = false;
-let activeUrl = null;
-let secondsLeft = 0;
+mkdir("/");
+["bin","etc","home","var","var/log","var/mail","var/tmp","tmp","opt","opt/vault","srv","srv/http",
+ "usr","usr/bin","usr/local","usr/local/bin","usr/share","usr/share/doc","root"].forEach(p => {
+  const owner = p.startsWith("/root") || p.startsWith("/opt/vault") ? "root" : "anon";
+  mkdir(p, owner, p === "/root" || p === "/opt/vault" ? "700" : "755");
+});
+mkdir("/home/anon","anon");
+mkdir("/home/anon/.ssh","anon","700");
+mkdir("/home/anon/.config","anon","700");
 
-const clearMainTimer = () => { if (toastTimer) { window.clearTimeout(toastTimer); toastTimer = 0; } };
-const clearDescTimer = () => { if (descTimer) { window.clearTimeout(descTimer); descTimer = 0; } };
-const clearRedirectTimers = () => {
-  if (redirectTimer) { window.clearTimeout(redirectTimer); redirectTimer = 0; }
-  if (countdownTimer) { window.clearInterval(countdownTimer); countdownTimer = 0; }
+write("/etc/motd","☉ hello friend\n","root");
+write("/etc/hostname","void\n","root");
+write("/etc/os-release","NAME=\"void\"\nVERSION=\"1.0\"\nID=void\nPRETTY_NAME=\"void linux\"\n","root");
+write("/etc/passwd",
+  "root:x:0:0:root:/root:/bin/bash\n" +
+  "anon:x:1000:1000::/home/anon:/bin/bash\n" +
+  "sshd:x:104:65534::/run/sshd:/usr/sbin/nologin\n" +
+  "www-data:x:33:33::/var/www:/usr/sbin/nologin\n","root");
+write("/etc/hosts","127.0.0.1\tlocalhost\n127.0.1.1\tvoid\n::1\tlocalhost\n","root");
+write("/etc/shadow",
+  "root:$6$rounds=5000$saltroot$fakehash:19000:0:99999:7:::\n" +
+  "anon:$6$rounds=5000$saltanon$fakehash:19000:0:99999:7:::\n","root","640");
+write("/etc/crontab","# m h dom mon dow user  command\n*/5 * * * * root /usr/local/bin/trace >> /var/log/syslog 2>&1\n","root");
+write("/etc/resolv.conf","nameserver 1.1.1.1\n","root");
+
+write("/home/anon/notes.txt",
+  "anon,\nесли ты снова здесь — значит, снова потерял.\n" +
+  "я оставил след. он не в этой папке.\nсмотри в логи. смотри в motd.\nroot знает. anon — нет.\n","anon");
+write("/home/anon/.bash_history",
+  "ls -la\ncat notes.txt\ncd /var/log\ncat auth.log\ngrep fragment auth.log\n" +
+  "cat /etc/motd\ncat /var/mail/anon\n" +
+  "echo 'root pass hint: fr13nd?' >> /tmp/.h\n" +
+  "cat /opt/vault/README\nsudo -i\n","anon");
+write("/home/anon/.ssh/id_rsa",
+  "-----BEGIN OPENSSH PRIVATE KEY-----\nAAAA...anon...AAAA\n-----END OPENSSH PRIVATE KEY-----\n","anon","600");
+write("/home/anon/.config/user-dirs.dirs","XDG_DESKTOP_DIR=\"$HOME/Desktop\"\nXDG_DOWNLOAD_DIR=\"$HOME/Downloads\"\n","anon");
+
+write("/var/log/syslog",
+  "Nov  7 02:11:04 void kernel: [0.000000] boot\n" +
+  "Nov  7 02:11:07 void systemd[1]: Started\n" +
+  "Nov  7 02:14:22 void sshd[42]: Server listening on 0.0.0.0 port 22.\n" +
+  "Nov  7 02:19:03 void sshd[128]: Accepted publickey for anon\n" +
+  "Nov  7 02:19:47 void sh[128]: signal lost\n" +
+  "Nov  7 02:22:00 void cron[87]: trace appended\n","root");
+write("/var/log/auth.log",
+  "Nov  7 02:19:03 void sshd[128]: Accepted publickey for anon from 127.0.0.1\n" +
+  "Nov  7 02:19:03 void sshd[128]: pam_unix(sshd:session): session opened for user anon\n" +
+  "Nov  7 02:21:14 void sshd[128]: Failed password for invalid user root\n" +
+  "Nov  7 02:23:01 void sshd[128]: session closed\n" +
+  "Nov  7 02:24:00 void su[200]: (to root) anon on pts/0\n" +
+  "Nov  7 02:24:00 void su[200]: pam_unix(su:auth): authentication failure; logname=anon\n" +
+  "# fragment: root pass -> 'fr' + '13' + 'nd' (see .bash_history)\n","root");
+write("/var/log/dpkg.log",
+  "2026-11-07 02:11:07 install base-files:amd64 1.0\n" +
+  "2026-11-07 02:11:08 install bash:amd64 5.2\n" +
+  "2026-11-07 02:11:10 install openssh-server:amd64 9.3\n","root");
+write("/var/mail/anon",
+  "From: unknown@friend.local\nTo: anon@void\nSubject: vault\n\n" +
+  "contact is in /opt/vault/contact.\nroot owns it. you don't.\nask root. or become root.\n-- \n☉\n","anon");
+write("/var/mail/spool/.w",
+  "queued: 3 messages\nfrom: unknown@friend.local\nto: anon@void\nsubject: traces\n","anon");
+write("/var/tmp/.trace",
+  "02:19:03 anon opened notes.txt\n02:19:47 anon opened auth.log\n02:21:14 anon tried root\n","anon");
+
+write("/opt/vault/README",
+  "vault\n=====\ncontact: /opt/vault/contact\nowner:   root\nmode:    600\nread:    root only\n" +
+  "root:    password is 6 chars. lowercase + digits. see logs.\n","root","644");
+write("/opt/vault/contact",
+  "059fd49bb600e6b62b0fe8e0370a7db2cea16620dbd41dfc720f6e3bed242a2055\n" +
+  "type: SESSION\norigin: hello friend\npurpose: contact\nnote: this is not a token. it's a handshake.\n","root","600");
+
+write("/srv/http/index.html","<h1>void</h1><p>nothing to see here.</p>\n","www-data");
+write("/srv/http/robots.txt","User-agent: *\nDisallow: /backup/\nDisallow: /opt/\n","www-data");
+
+write("/root/flag.txt","you became root. now you see.\n","root","600");
+write("/root/.bash_history","cat /opt/vault/contact\nshred -u /root/.bash_history\n","root","600");
+
+write("/tmp/.h","root pass hint: fr13nd?\n","anon");
+write("/tmp/.s","last login: 02:19:03\nlast cmd:    cat /opt/vault/README\n","anon");
+write("/tmp/.w","who: anon\nwhy: looking\n","anon");
+
+["sh","bash","ls","cat","grep","find","sed","awk","cut","sort","uniq","wc","head","tail",
+ "cp","mv","rm","mkdir","rmdir","touch","chmod","chown","ln","stat","file","du","df",
+ "ps","top","ss","netstat","ping","curl","wget","ssh","scp","rsync","nc","tcpdump",
+ "nano","vim","less","more","tar","gzip","base64","xxd","strings","openssl",
+ "systemctl","journalctl","crontab","apt","dpkg","pip","git","whoami","id","uname","hostname",
+ "date","uptime","free","who","last","sudo","su","clear","echo","env","history","man",
+ "which","whereis","type","alias","export"].forEach(b => {
+  write("/bin/" + b,"\x7fELF...\n","root","755");
+});
+
+const S = {
+  host: "void",
+  user: "anon",
+  cwd: "/home/anon",
+  history: [],
+  histIdx: -1,
+  env: {
+    HOME: "/home/anon",
+    USER: "anon",
+    SHELL: "/bin/bash",
+    TERM: "xterm-256color",
+    PATH: "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+    LANG: "C.UTF-8"
+  },
+  aliases: {},
+  sudoUntil: 0,
+  sudoTries: 0,
+  sudoLockedUntil: 0,
+  proc: [
+    {pid:1, cmd:"/sbin/init"},{pid:2, cmd:"[kthreadd]"},{pid:42, cmd:"/usr/sbin/sshd"},
+    {pid:87, cmd:"/usr/bin/cron"},{pid:128, cmd:"/bin/bash"},{pid:200, cmd:"/usr/bin/nano notes.txt"}
+  ],
+  net: [
+    {proto:"tcp", local:"0.0.0.0:22", state:"LISTEN", pid:42},
+    {proto:"tcp", local:"127.0.0.1:631", state:"LISTEN", pid:87},
+    {proto:"udp", local:"0.0.0.0:68", state:"ESTABLISHED", pid:1}
+  ]
 };
-const clearAllTimers = () => { clearMainTimer(); clearDescTimer(); clearRedirectTimers(); };
+const ROOT_PASS = "fr13nd";
+const SUDO_TIMEOUT = 3 * 60 * 1000;
 
-const setBusy = (busy) => {
-  isOpening = busy;
-  symbol.classList.toggle("is-busy", busy);
-  symbol.setAttribute("aria-busy", busy ? "true" : "false");
-  if (!busy) {
-    symbol.removeAttribute("aria-disabled");
-    symbol.removeAttribute("disabled");
-    symbol.setAttribute("tabindex", "0");
-    activeUrl = null;
+function norm(p){
+  if (!p) return S.cwd;
+  if (p.startsWith("~")) p = S.env.HOME + p.slice(1);
+  if (p.startsWith("/")) return p.replace(/\/+/g,"/").replace(/\/$/,"") || "/";
+  const parts = (S.cwd + "/" + p).split("/");
+  const out = [];
+  for (const part of parts){
+    if (!part || part === ".") continue;
+    if (part === "..") out.pop();
+    else out.push(part);
   }
-};
+  return "/" + out.join("/");
+}
+function baseOf(p){ const a = p.split("/").filter(Boolean); return a[a.length-1] || "/"; }
+function parentOf(p){ const a = p.split("/").filter(Boolean); a.pop(); return "/" + a.join("/"); }
+function isRoot(){ return S.user === "root" || Date.now() < S.sudoUntil; }
+function canRead(path){
+  const n = FS[path]; if (!n) return false;
+  if ((n.mode === "600" || n.mode === "640") && n.owner === "root" && !isRoot()) return false;
+  return true;
+}
+function canWrite(path){
+  const n = FS[path]; if (!n) return false;
+  if (n.owner === "root" && !isRoot()) return false;
+  return true;
+}
 
-const hideMainToast = () => {
-  clearMainTimer();
-  if (!toast) return;
-  toast.classList.remove("is-visible", "is-cancelable", "is-canceled");
-};
-const hideDescToast = () => {
-  clearDescTimer();
-  if (!toastDesc) return;
-  toastDesc.classList.remove("is-visible");
-};
-const hideAllToasts = () => { hideMainToast(); hideDescToast(); };
-
-const showMainToast = (message, { duration = CANCEL_WINDOW, cancelable = false, canceled = false } = {}) => {
-  if (!toast || !toastText) return;
-  toastText.textContent = message;
-  toast.style.setProperty("--toast-duration", `${duration}ms`);
-  toast.classList.remove("is-visible", "is-cancelable", "is-canceled");
-  void toast.offsetWidth;
-  if (cancelable) toast.classList.add("is-cancelable");
-  if (canceled) toast.classList.add("is-canceled");
-  toast.classList.add("is-visible");
-  clearMainTimer();
-  toastTimer = window.setTimeout(hideMainToast, duration);
-};
-
-const setDescContent = (description, url) => {
-  if (!toastDescText) return;
-  toastDescText.textContent = "";
-  if (description) toastDescText.appendChild(document.createTextNode(description));
-  if (url) {
-    let safeHref = "";
-    try {
-      const parsed = new URL(url);
-      if (ALLOWED_PROTOCOLS.has(parsed.protocol)) safeHref = parsed.href;
-    } catch { safeHref = ""; }
-    if (safeHref) {
-      if (description) toastDescText.appendChild(document.createTextNode(" · "));
-      const anchor = document.createElement("a");
-      anchor.href = safeHref;
-      anchor.target = "_blank";
-      anchor.rel = "noopener noreferrer";
-      anchor.textContent = safeHref.length > 60 ? safeHref.slice(0, 57) + "…" : safeHref;
-      toastDescText.appendChild(anchor);
-    }
+function pushLine(text, cls=""){
+  const el = document.createElement("p");
+  el.className = "line " + cls;
+  el.textContent = text;
+  screenEl.appendChild(el);
+  screenEl.scrollTop = screenEl.scrollHeight;
+  return el;
+}
+async function typeLine(text, cls="", speed=7){
+  const el = pushLine("", cls);
+  const chunk = Math.max(1, Math.ceil(text.length / 200));
+  for (let i=0; i<text.length; i+=chunk){
+    el.textContent += text.slice(i, i+chunk);
+    screenEl.scrollTop = screenEl.scrollHeight;
+    if (i % (chunk*4) === 0) await sleep(speed);
   }
-  if (!toastDescText.textContent) toastDescText.textContent = "Переход по случайной ссылке…";
-};
+  await sleep(15);
+  return el;
+}
+async function typeLines(lines, cls=""){ for (const l of lines) await typeLine(l, cls, 5); }
+async function withLoad(ms, fn){
+  const el = pushLine("[ .... ]", "loading");
+  await sleep(ms);
+  el.remove();
+  return fn();
+}
+function complexity(name, arg){
+  const heavy = ["nmap","ssh","hydra","gobuster","wget","curl","tar","nc","find","grep","tree","systemctl","journalctl"];
+  let ms = 90 + Math.random()*80;
+  if (heavy.includes(name)) ms += 400 + Math.random()*500;
+  if (arg && arg.length > 12) ms += arg.length * 6;
+  return Math.min(2200, ms);
+}
 
-const showDescToast = (description, url, { duration = CANCEL_WINDOW } = {}) => {
-  if (!toastDesc) return;
-  clearDescTimer();
-  setDescContent(description, url);
-  toastDesc.classList.add("is-visible");
-  descTimer = window.setTimeout(hideDescToast, duration);
-};
-
-const pickRandomIndex = () => {
-  if (links.length === 1) { lastIndex = 0; return 0; }
-  let index = Math.floor(Math.random() * links.length);
-  if (index === lastIndex) {
-    index = (index + 1 + Math.floor(Math.random() * (links.length - 1))) % links.length;
+function updatePS1(){
+  const home = S.env.HOME;
+  const p = S.cwd === home ? "~" : S.cwd;
+  const label = S.host;
+  if (isRoot()){
+    ps1.innerHTML = `<span class="r">root</span>@<span class="h">${esc(label)}</span>:${esc(p)}#`;
+    barHost.innerHTML = `<b>root@${esc(label)}</b>`;
+  } else {
+    ps1.innerHTML = `<span class="u">${esc(S.user)}</span>@<span class="h">${esc(label)}</span>:${esc(p)}$`;
+    barHost.innerHTML = `<b>${esc(S.user)}@${esc(label)}</b>`;
   }
-  lastIndex = index;
-  return index;
-};
+  sHost.textContent = label;
+  sUser.textContent = S.user;
+  sUser.className = "v " + (isRoot() ? "orange" : "blue");
+  sPath.textContent = p;
+  sState.textContent = isRoot() ? "root" : "recon";
+  sState.className = "v " + (isRoot() ? "orange" : "green");
+}
+updatePS1();
 
-const navigateTo = (url) => {
-  let newTab = null;
-  try { newTab = window.open(url, "_blank", "noopener,noreferrer"); }
-  catch { newTab = null; }
-  if (newTab) {
-    try { newTab.opener = null; } catch { /* cross-origin */ }
-    return true;
+input.addEventListener("keydown", (e) => {
+  if (e.key === "ArrowUp"){
+    e.preventDefault();
+    if (!S.history.length) return;
+    S.histIdx = Math.max(0, S.histIdx - 1);
+    input.value = S.history[S.histIdx] || "";
+  } else if (e.key === "ArrowDown"){
+    e.preventDefault();
+    S.histIdx = Math.min(S.history.length, S.histIdx + 1);
+    input.value = S.history[S.histIdx] || "";
   }
-  try { window.location.assign(url); return false; }
-  catch { return false; }
-};
+});
 
-const cancelPending = () => {
-  if (!isOpening) return;
-  clearAllTimers();
-  activeUrl = null;
-  setBusy(false);
-  showMainToast("Переход отменён", { duration: 2000, canceled: true });
-  showDescToast("Переход отменён", null, { duration: 2000 });
-};
-
-const startCountdown = () => {
-  if (countdownTimer) return;
-  countdownTimer = window.setInterval(() => {
-    secondsLeft -= 1;
-    if (secondsLeft > 0 && toastText && isOpening) {
-      toastText.textContent = `Переход по случайной ссылке через ${secondsLeft}…`;
-    }
-  }, 1000);
-};
-
-const openRandomLink = () => {
-  if (isOpening) return;
-  const item = links[pickRandomIndex()];
-  const url = item.url;
-
-  let parsed;
-  try { parsed = new URL(url); }
-  catch {
-    showMainToast("Ссылка недоступна", { duration: 2500 });
-    showDescToast("Ссылка недоступна", null, { duration: 2500 });
-    return;
-  }
-  if (!ALLOWED_PROTOCOLS.has(parsed.protocol)) {
-    showMainToast("Ссылка недоступна", { duration: 2500 });
-    showDescToast("Ссылка недоступна", null, { duration: 2500 });
-    return;
-  }
-
-  clearAllTimers();
-  setBusy(true);
-  activeUrl = url;
-  secondsLeft = Math.ceil(REDIRECT_DELAY / 1000);
-
-  showMainToast(`Переход по случайной ссылке через ${secondsLeft}…`, {
-    duration: CANCEL_WINDOW, cancelable: true
+function askPassword(promptText){
+  return new Promise(resolve => {
+    const el = document.createElement("p");
+    el.className = "line warn";
+    el.textContent = promptText;
+    screenEl.appendChild(el);
+    screenEl.scrollTop = screenEl.scrollHeight;
+    const inp = document.createElement("input");
+    inp.type = "password";
+    inp.autocomplete = "off";
+    inp.style.cssText = "width:100%;background:var(--input-bg);border:1px solid var(--input-border);border-radius:8px;color:var(--fg);font:inherit;font-weight:700;outline:0;padding:8px 10px;margin:4px 0 8px";
+    screenEl.appendChild(inp);
+    screenEl.scrollTop = screenEl.scrollHeight;
+    inp.focus();
+    const done = v => { inp.remove(); resolve(v); };
+    inp.addEventListener("keydown", e => {
+      if (e.key === "Enter"){ e.preventDefault(); done(inp.value); }
+      if (e.key === "Escape"){ done(""); }
+    });
   });
-  showDescToast(item.description, url, { duration: CANCEL_WINDOW });
-  startCountdown();
+}
 
-  redirectTimer = window.setTimeout(() => {
-    clearRedirectTimers();
-    const target = activeUrl;
-    if (!target) { setBusy(false); hideAllToasts(); return; }
-    if (toastText) toastText.textContent = "Переход по случайной ссылке…";
-    toast.classList.remove("is-cancelable");
-    const openedInTab = navigateTo(target);
-    setBusy(false);
-    if (openedInTab) hideAllToasts();
-  }, REDIRECT_DELAY);
+const CMD = {};
+
+CMD.help = async () => {
+  await typeLines([
+    "no help. only traces.","",
+    "system:     ls  cd  pwd  cat  find  grep  tree  head  tail  wc  stat  file",
+    "            du  df  ps  ss  top  free  uptime  who  last  env  date  uname",
+    "files:      cp  mv  rm  mkdir  touch  chmod  chown  ln  nano  vim  less  more",
+    "net:        ping  curl  wget  ssh  scp  rsync  nc  tcpdump",
+    "tools:      base64  xxd  strings  openssl  tar  gzip  apt  dpkg  pip  git",
+    "process:    ps  top  systemctl  journalctl  crontab",
+    "priv:       sudo  su  id  whoami  hostname  history  clear  echo  export  alias",
+    "meta:       which  whereis  type  man"
+  ], "dim");
 };
 
-symbol.addEventListener("click", openRandomLink);
-symbol.addEventListener("keydown", (event) => {
-  if (event.repeat) return;
-  if (event.key === "Enter" || event.key === " " || event.key === "Spacebar") {
-    event.preventDefault();
-    openRandomLink();
+CMD.clear = async () => { screenEl.innerHTML = ""; };
+CMD.pwd = async () => { await typeLine(S.cwd); };
+CMD.whoami = async () => { await typeLine(S.user); };
+CMD.id = async () => {
+  if (isRoot()) await typeLine("uid=0(root) gid=0(root) groups=0(root)");
+  else await typeLine(`uid=1000(${S.user}) gid=1000(${S.user}) groups=1000(${S.user})`);
+};
+CMD.hostname = async () => { await typeLine(S.host); };
+CMD.uname = async (arg) => {
+  if ((arg||"").includes("-a")) await typeLine(`${S.host} 5.15.0-0-virtual #1 SMP PREEMPT x86_64 GNU/Linux`);
+  else await typeLine("Linux");
+};
+CMD.date = async () => { await typeLine(new Date().toUTCString()); };
+CMD.uptime = async () => { await typeLine(` 02:23:01 up 12 min,  1 user,  load average: 0.01, 0.03, 0.00`); };
+CMD.free = async () => {
+  await typeLines([
+    "              total        used        free      shared  buff/cache   available",
+    "Mem:          64214       18120       38964         820       10240       44120",
+    "Swap:             0           0           0"
+  ], "dim");
+};
+CMD.who = async () => { await typeLine(`${S.user}   pts/0        2026-11-07 02:19 (:0)`); };
+CMD.last = async () => {
+  await typeLines([
+    `${S.user}   pts/0        :0               2026-11-07 02:19   still logged in`,
+    "reboot   system boot  5.15.0-0-virtual 2026-11-07 02:11   still running",
+    "","wtmp begins Fri Nov  7 02:11:00 2026"
+  ], "dim");
+};
+CMD.env = async () => { await typeLines(Object.entries(S.env).map(([k,v]) => `${k}=${v}`), "dim"); };
+CMD.echo = async (arg) => { await typeLine(arg || ""); };
+CMD.export = async (arg) => {
+  const m = (arg||"").trim().match(/^([A-Z_][A-Z0-9_]*)=(.*)$/);
+  if (!m){ await typeLine("export: usage: export KEY=VALUE", "err"); return; }
+  S.env[m[1]] = m[2].replace(/^["']|["']$/g,"");
+  await typeLine(`${m[1]}=${S.env[m[1]]}`, "dim");
+};
+CMD.alias = async (arg) => {
+  const m = (arg||"").trim().match(/^([a-zA-Z_][a-zA-Z0-9_]*)=(.*)$/);
+  if (!m){
+    if (!Object.keys(S.aliases).length){ await typeLine("(no aliases)", "dim"); return; }
+    await typeLines(Object.entries(S.aliases).map(([k,v]) => `alias ${k}='${v}'`), "dim");
+    return;
   }
-});
+  S.aliases[m[1]] = m[2].replace(/^["']|["']$/g,"");
+  await typeLine(`alias ${m[1]}='${S.aliases[m[1]]}'`, "dim");
+};
+CMD.which = async (arg) => {
+  const name = (arg||"").trim();
+  if (!name){ await typeLine("which: missing operand", "err"); return; }
+  if (FS["/bin/"+name]) await typeLine(`/bin/${name}`);
+  else await typeLine(`which: no ${name} in (${S.env.PATH})`, "err");
+};
+CMD.whereis = async (arg) => {
+  const name = (arg||"").trim();
+  if (!name){ await typeLine("whereis: missing operand", "err"); return; }
+  if (FS["/bin/"+name]) await typeLine(`${name}: /bin/${name}`);
+  else await typeLine(`${name}:`);
+};
+CMD.type = async (arg) => {
+  const name = (arg||"").trim();
+  if (!name){ await typeLine("type: missing operand", "err"); return; }
+  if (S.aliases[name]) await typeLine(`${name} is aliased to '${S.aliases[name]}'`);
+  else if (FS["/bin/"+name]) await typeLine(`${name} is /bin/${name}`);
+  else await typeLine(`${name}: not found`, "err");
+};
+CMD.man = async (arg) => {
+  const name = (arg||"").trim();
+  if (!name){ await typeLine("What manual page do you want?", "err"); return; }
+  if (!FS["/bin/"+name]){ await typeLine(`No manual entry for ${name}`, "err"); return; }
+  await typeLines([`${name.toUpperCase()}(1)`,``,`NAME`,`    ${name} - system utility`,``,
+    `SYNOPSIS`,`    ${name} [OPTIONS] [ARGS]`,``,`DESCRIPTION`,`    no description available.`], "dim");
+};
 
-toast.addEventListener("click", () => {
-  if (!toast.classList.contains("is-cancelable")) return;
-  cancelPending();
-});
-
-window.addEventListener("pageshow", (event) => {
-  clearAllTimers();
-  setBusy(false);
-  if (event.persisted) hideAllToasts();
-});
-
-document.addEventListener("visibilitychange", () => {
-  if (document.hidden) {
-    if (countdownTimer) { window.clearInterval(countdownTimer); countdownTimer = 0; }
-  } else if (isOpening && redirectTimer && secondsLeft > 0) {
-    startCountdown();
+CMD.ls = async (arg) => {
+  const parts = (arg||"").split(/\s+/).filter(Boolean);
+  const flags = parts.filter(x => x.startsWith("-")).join("");
+  const targetArg = parts.find(x => !x.startsWith("-"));
+  const path = norm(targetArg);
+  const n = FS[path];
+  if (!n){ await typeLine(`ls: cannot access '${targetArg||path}': No such file or directory`, "err"); return; }
+  if (n.type === "file"){ await typeLine(baseOf(path)); return; }
+  const showHidden = flags.includes("a");
+  const long = flags.includes("l");
+  const items = n.content.filter(x => showHidden || !x.startsWith(".")).sort();
+  if (!items.length){ await typeLine(""); return; }
+  if (long){
+    const lines = items.map(name => {
+      const full = path === "/" ? "/" + name : path + "/" + name;
+      const c = FS[full];
+      if (!c) return null;
+      if (c.mode === "600" && c.owner === "root" && !isRoot())
+        return `${"drwx------"} 1 root root   4096 ${name}${c.type==="dir"?"/":""}`;
+      const isDir = c.type === "dir";
+      const size = isDir ? 4096 : (c.content||"").length;
+      const date = new Date(c.mtime);
+      const p = n => String(n).padStart(2,"0");
+      const dt = `${p(date.getMonth()+1)} ${p(date.getDate())} ${p(date.getHours())}:${p(date.getMinutes())}`;
+      return `${isDir?"drwxr-xr-x":"-rw-r--r--"} 1 ${c.owner} ${c.owner} ${String(size).padStart(6)} ${dt} ${name}${isDir?"/":""}`;
+    }).filter(Boolean);
+    await typeLines(lines, "dim");
+  } else {
+    await typeLine(items.join("  "));
   }
+};
+
+CMD.cd = async (arg) => {
+  const path = norm((arg||"").trim() || S.env.HOME);
+  const n = FS[path];
+  if (!n){ await typeLine(`cd: ${arg}: No such file or directory`, "err"); return; }
+  if (n.type !== "dir"){ await typeLine(`cd: ${arg}: Not a directory`, "err"); return; }
+  S.cwd = path;
+  updatePS1();
+};
+
+CMD.cat = async (arg) => {
+  const name = (arg||"").trim();
+  if (!name){ await typeLine("cat: missing operand", "err"); return; }
+  const path = norm(name);
+  if (!canRead(path)){ await typeLine(`cat: ${name}: Permission denied`, "err"); return; }
+  const n = FS[path];
+  if (!n){ await typeLine(`cat: ${name}: No such file or directory`, "err"); return; }
+  if (n.type === "dir"){ await typeLine(`cat: ${name}: Is a directory`, "err"); return; }
+  await typeLines(n.content.split("\n"));
+};
+
+CMD.head = async (arg) => {
+  const name = (arg||"").trim();
+  if (!name){ await typeLine("head: missing operand", "err"); return; }
+  const n = FS[norm(name)];
+  if (!n || n.type === "dir"){ await typeLine(`head: ${name}: No such file`, "err"); return; }
+  await typeLines(n.content.split("\n").slice(0,3));
+};
+CMD.tail = async (arg) => {
+  const name = (arg||"").trim();
+  if (!name){ await typeLine("tail: missing operand", "err"); return; }
+  const n = FS[norm(name)];
+  if (!n || n.type === "dir"){ await typeLine(`tail: ${name}: No such file`, "err"); return; }
+  await typeLines(n.content.split("\n").slice(-3));
+};
+CMD.wc = async (arg) => {
+  const name = (arg||"").trim();
+  if (!name){ await typeLine("wc: missing operand", "err"); return; }
+  const n = FS[norm(name)];
+  if (!n || n.type === "dir"){ await typeLine(`wc: ${name}: No such file`, "err"); return; }
+  const l = n.content.split("\n").length;
+  const w = n.content.split(/\s+/).filter(Boolean).length;
+  await typeLine(`  ${l}  ${w}  ${n.content.length} ${name}`);
+};
+
+CMD.grep = async (arg) => {
+  const m = (arg||"").trim().match(/^(\S+)\s+(\S+)$/);
+  if (!m){ await typeLine("grep: usage: grep pattern file", "err"); return; }
+  const [, pat, file] = m;
+  const path = norm(file);
+  if (!canRead(path)){ await typeLine(`grep: ${file}: Permission denied`, "err"); return; }
+  const n = FS[path];
+  if (!n || n.type === "dir"){ await typeLine(`grep: ${file}: No such file`, "err"); return; }
+  let re; try { re = new RegExp(pat); } catch { await typeLine("grep: invalid pattern", "err"); return; }
+  const lines = n.content.split("\n").filter(l => re.test(l));
+  if (!lines.length){ await typeLine("(no matches)", "dim"); return; }
+  await typeLines(lines, "ok");
+};
+
+CMD.find = async (arg) => {
+  const name = (arg||"").trim();
+  if (!name){ await typeLine("find: missing operand", "err"); return; }
+  const found = [];
+  for (const p of Object.keys(FS)){
+    if (p === "/") continue;
+    if (baseOf(p) === name){ if (!canRead(p)) continue; found.push(p); }
+  }
+  if (!found.length){ await typeLine("(nothing found)", "dim"); return; }
+  await typeLines(found.sort(), "ok");
+};
+
+CMD.tree = async (arg) => {
+  const root = norm((arg||"").trim() || ".");
+  const lines = [];
+  const walk = (p, depth) => {
+    if (depth > 6) return;
+    const n = FS[p]; if (!n) return;
+    if (n.mode === "600" && n.owner === "root" && !isRoot()) return;
+    const name = p === "/" ? "/" : baseOf(p);
+    lines.push("  ".repeat(depth) + name + (n.type === "dir" ? "/" : ""));
+    if (n.type === "dir") n.content.slice().sort().forEach(c => walk(p === "/" ? "/" + c : p + "/" + c, depth + 1));
+  };
+  walk(root, 0);
+  await typeLines(lines);
+};
+
+CMD.file = async (arg) => {
+  const name = (arg||"").trim();
+  if (!name){ await typeLine("file: missing operand", "err"); return; }
+  const n = FS[norm(name)];
+  if (!n){ await typeLine(`file: ${name}: cannot open`, "err"); return; }
+  if (n.type === "dir") await typeLine(`${name}: directory`);
+  else if (n.content.startsWith("\x7fELF")) await typeLine(`${name}: ELF 64-bit LSB executable`);
+  else await typeLine(`${name}: ASCII text`);
+};
+CMD.stat = async (arg) => {
+  const name = (arg||"").trim();
+  if (!name){ await typeLine("stat: missing operand", "err"); return; }
+  const n = FS[norm(name)];
+  if (!n){ await typeLine(`stat: ${name}: No such file`, "err"); return; }
+  await typeLines([
+    `  File: ${name}`,
+    `  Size: ${n.type==="dir"?4096:(n.content||"").length}\tType: ${n.type}`,
+    `  Mode: ${n.mode}\tOwner: ${n.owner}`,
+    `Modify: ${new Date(n.mtime).toUTCString()}`
+  ], "dim");
+};
+CMD.du = async (arg) => {
+  const path = norm((arg||"").trim() || ".");
+  let total = 0;
+  for (const [p, n] of Object.entries(FS)){
+    if ((p === path || p.startsWith(path + "/")) && canRead(p)){
+      total += n.type === "dir" ? 4096 : (n.content||"").length;
+    }
+  }
+  await typeLine(`${Math.ceil(total/1024)}K\t${arg||"."}`);
+};
+CMD.df = async () => {
+  await typeLines([
+    "Filesystem     1K-blocks    Used Available Use% Mounted on",
+    "/dev/root         524288  102400    421888  20% /",
+    "tmpfs              65536       0     65536   0% /dev"
+  ], "dim");
+};
+CMD.ps = async () => {
+  const lines = ["  PID TTY          TIME CMD"];
+  S.proc.forEach(p => lines.push(`${String(p.pid).padStart(5)} pts/0    00:00:00 ${p.cmd}`));
+  await typeLines(lines, "dim");
+};
+CMD.top = async () => {
+  await typeLines([
+    "top - 02:23:01 up 12 min,  1 user,  load average: 0.01, 0.03, 0.00",
+    "Tasks:  24 total,   1 running,  23 sleeping",
+    "%Cpu(s):  0.3 us,  0.1 sy,  0.0 ni, 99.6 id",
+    "MiB Mem :  64214.0 total,  38964.0 free,  18120.0 used","",
+    "  PID USER      PR  NI    VIRT    RES  %CPU  %MEM     TIME+ COMMAND",
+    "    1 root      20   0  168000  12000   0.0   0.1   0:01.20 init",
+    "   42 root      20   0   85000   9000   0.0   0.0   0:00.40 sshd",
+    "  128 anon      20   0   22000   5000   0.1   0.0   0:00.10 bash"
+  ], "dim");
+};
+CMD.ss = async () => {
+  const lines = ["Netid State  Local Address:Port"];
+  S.net.forEach(n => lines.push(`${n.proto.padEnd(5)} ${n.state.padEnd(11)} ${n.local}`));
+  await typeLines(lines, "dim");
+};
+CMD.ping = async (arg) => {
+  const host = (arg||"").trim();
+  if (!host){ await typeLine("ping: usage: ping host", "err"); return; }
+  await typeLines([
+    `PING ${host} (127.0.0.1) 56(84) bytes of data.`,
+    `64 bytes from ${host}: icmp_seq=1 ttl=64 time=0.041 ms`,
+    `64 bytes from ${host}: icmp_seq=2 ttl=64 time=0.038 ms`,
+    `64 bytes from ${host}: icmp_seq=3 ttl=64 time=0.042 ms`,``,
+    `--- ${host} ping statistics ---`,
+    `3 packets transmitted, 3 received, 0% packet loss, time 2002ms`
+  ], "ok");
+};
+CMD.curl = async (arg) => {
+  const url = (arg||"").trim();
+  if (!url){ await typeLine("curl: try 'curl <url>'", "err"); return; }
+  await typeLines([
+    `*   Trying 127.0.0.1:80...`,
+    `* Connected to ${url.replace(/^https?:\/\//,"").split("/")[0]} (127.0.0.1) port 80`,
+    `> GET / HTTP/1.1`,`> Host: ${url}`,`< HTTP/1.1 404 Not Found`,`< server: void`,`< content-length: 0`
+  ], "dim");
+};
+CMD.wget = async (arg) => {
+  const url = (arg||"").trim();
+  if (!url){ await typeLine("wget: missing URL", "err"); return; }
+  await typeLines([
+    `--${new Date().toISOString().slice(0,10)}--  ${url}`,
+    `Resolving... 127.0.0.1`,`Connecting to 127.0.0.1:80... connected.`,
+    `HTTP request sent, awaiting response... 404 Not Found`,
+    `2026-11-07 02:23:01 ERROR 404: Not Found.`
+  ], "warn");
+};
+CMD.ssh = async (arg) => {
+  const m = (arg||"").trim().match(/^(\S+)@(\S+)$/);
+  if (!m){ await typeLine("ssh: usage: ssh user@host", "err"); return; }
+  const [, user, host] = m;
+  await typeLines([
+    `The authenticity of host '${host}' can't be established.`,
+    `ED25519 key fingerprint is SHA256:fakehashfakehashfakehash.`,
+    `Are you sure you want to continue connecting (yes/no)? yes`,
+    `Warning: Permanently added '${host}' to the list of known hosts.`,
+    `${user}@${host}'s password: `,
+    `Permission denied, please try again.`,
+    `Permission denied (publickey,password).`
+  ], "warn");
+};
+CMD.scp = async (arg) => {
+  const s = (arg||"").trim();
+  if (!s){ await typeLine("scp: usage: scp src dst", "err"); return; }
+  await typeLines([`scp: ${s}`,`Permission denied (publickey).`], "warn");
+};
+CMD.rsync = async (arg) => {
+  const s = (arg||"").trim();
+  if (!s){ await typeLine("rsync: usage: rsync src dst", "err"); return; }
+  await typeLines([`rsync: ${s}`,`rsync: connection unexpectedly closed`], "warn");
+};
+CMD.nc = async (arg) => {
+  const s = (arg||"").trim();
+  if (!s){ await typeLine("nc: usage: nc host port", "err"); return; }
+  await typeLines([`(UNKNOWN) [${s}] open`,`connection established.`,`> hello`,`< friend`,`connection closed.`], "ok");
+};
+CMD.tcpdump = async () => {
+  await typeLines([
+    "tcpdump: verbose output suppressed, use -v or -vv",
+    "listening on eth0, link-type EN10MB (Ethernet), capture size 262144 bytes",
+    "02:23:01.001 IP void.ssh > 127.0.0.1.49212: Flags [P.], seq 1:64, ack 1",
+    "02:23:01.042 IP 127.0.0.1.49212 > void.ssh: Flags [.], ack 64, win 502",
+    "3 packets captured"
+  ], "dim");
+};
+CMD.base64 = async (arg) => {
+  const parts = (arg||"").trim().split(/\s+/);
+  const flag = parts[0] || "";
+  const file = parts[1] || "";
+  if (flag === "-d" && file){
+    const n = FS[norm(file)];
+    if (!n || n.type === "dir"){ await typeLine(`base64: ${file}: No such file`, "err"); return; }
+    try{ await typeLine(atob(n.content.replace(/\s+/g,"")), "ok"); }
+    catch{ await typeLine("base64: invalid input", "err"); }
+    return;
+  }
+  if (file){
+    const n = FS[norm(file)];
+    if (!n || n.type === "dir"){ await typeLine(`base64: ${file}: No such file`, "err"); return; }
+    await typeLine(btoa(n.content), "ok");
+    return;
+  }
+  await typeLine("base64: missing file", "err");
+};
+CMD.xxd = async (arg) => {
+  const name = (arg||"").trim();
+  if (!name){ await typeLine("xxd: missing file", "err"); return; }
+  const n = FS[norm(name)];
+  if (!n || n.type === "dir"){ await typeLine(`xxd: ${name}: No such file`, "err"); return; }
+  const bytes = new TextEncoder().encode(n.content);
+  const lines = [];
+  for (let i=0; i<Math.min(bytes.length, 256); i+=16){
+    const chunk = bytes.slice(i, i+16);
+    const hex = Array.from(chunk).map(b => b.toString(16).padStart(2,"0")).join(" ");
+    const ascii = Array.from(chunk).map(b => (b>=32&&b<127)?String.fromCharCode(b):".").join("");
+    lines.push(`${i.toString(16).padStart(8,"0")}: ${hex.padEnd(48)} ${ascii}`);
+  }
+  await typeLines(lines, "dim");
+};
+CMD.strings = async (arg) => {
+  const name = (arg||"").trim();
+  if (!name){ await typeLine("strings: missing file", "err"); return; }
+  const n = FS[norm(name)];
+  if (!n || n.type === "dir"){ await typeLine(`strings: ${name}: No such file`, "err"); return; }
+  const strings = n.content.match(/[\x20-\x7e]{4,}/g) || [];
+  await typeLines(strings.slice(0,20), "dim");
+};
+CMD.tar = async (arg) => {
+  const s = (arg||"").trim();
+  if (!s){ await typeLine("tar: usage: tar [options] file", "err"); return; }
+  if (s.includes("-tzf") || s.includes("-tf")){
+    const file = s.split(/\s+/).pop();
+    const n = FS[norm(file)];
+    if (!n){ await typeLine(`tar: ${file}: Cannot open`, "err"); return; }
+    await typeLines(n.content.split("\n"), "dim");
+    return;
+  }
+  if (s.includes("-xzf") || s.includes("-xf")){
+    await typeLine("tar: extracting not supported in this sandbox", "warn");
+    return;
+  }
+  await typeLine("tar: unknown option", "err");
+};
+CMD.gzip = async () => { await typeLine("gzip: not supported", "err"); };
+CMD.openssl = async () => { await typeLine("openssl: no encrypted files in this vault", "dim"); };
+CMD.chmod = async (arg) => {
+  const parts = (arg||"").trim().split(/\s+/);
+  if (parts.length < 2){ await typeLine("chmod: usage: chmod mode file", "err"); return; }
+  const [mode, file] = parts;
+  const p = norm(file);
+  if (!FS[p]){ await typeLine(`chmod: ${file}: No such file`, "err"); return; }
+  if (!canWrite(p)){ await typeLine(`chmod: ${file}: Operation not permitted`, "err"); return; }
+  FS[p].mode = mode;
+  await typeLine(`mode of '${file}' changed to ${mode}`, "ok");
+};
+CMD.chown = async (arg) => {
+  const parts = (arg||"").trim().split(/\s+/);
+  if (parts.length < 2){ await typeLine("chown: usage: chown user file", "err"); return; }
+  const [user, file] = parts;
+  const p = norm(file);
+  if (!FS[p]){ await typeLine(`chown: ${file}: No such file`, "err"); return; }
+  if (!isRoot()){ await typeLine(`chown: ${file}: Operation not permitted`, "err"); return; }
+  FS[p].owner = user;
+  await typeLine(`owner of '${file}' changed to ${user}`, "ok");
+};
+CMD.cp = async (arg) => {
+  const parts = (arg||"").trim().split(/\s+/);
+  if (parts.length < 2){ await typeLine("cp: missing operand", "err"); return; }
+  const [src, dst] = parts;
+  const sp = norm(src), dp = norm(dst);
+  if (!FS[sp]){ await typeLine(`cp: ${src}: No such file`, "err"); return; }
+  if (FS[sp].type === "dir"){ await typeLine(`cp: ${src}: Is a directory`, "err"); return; }
+  if (!canWrite(parentOf(dp))){ await typeLine(`cp: ${dst}: Permission denied`, "err"); return; }
+  write(dp, FS[sp].content, S.user);
+  await typeLine(`copied ${src} -> ${dst}`, "ok");
+};
+CMD.mv = async (arg) => {
+  const parts = (arg||"").trim().split(/\s+/);
+  if (parts.length < 2){ await typeLine("mv: missing operand", "err"); return; }
+  const [src, dst] = parts;
+  const sp = norm(src), dp = norm(dst);
+  if (!FS[sp]){ await typeLine(`mv: ${src}: No such file`, "err"); return; }
+  if (!canWrite(sp) || !canWrite(parentOf(dp))){ await typeLine(`mv: ${dst}: Permission denied`, "err"); return; }
+  write(dp, FS[sp].content, FS[sp].owner, FS[sp].mode);
+  delete FS[sp];
+  await typeLine(`moved ${src} -> ${dst}`, "ok");
+};
+CMD.ln = async (arg) => {
+  const parts = (arg||"").trim().split(/\s+/);
+  if (parts.length < 2){ await typeLine("ln: missing operand", "err"); return; }
+  await typeLine(`ln: ${parts[1]}: created`, "dim");
+};
+CMD.mkdir = async (arg) => {
+  const name = (arg||"").trim();
+  if (!name){ await typeLine("mkdir: missing operand", "err"); return; }
+  const p = norm(name);
+  if (FS[p]){ await typeLine(`mkdir: cannot create directory '${name}': File exists`, "err"); return; }
+  mkdir(p, S.user);
+  await typeLine(`created ${name}/`, "dim");
+};
+CMD.touch = async (arg) => {
+  const name = (arg||"").trim();
+  if (!name){ await typeLine("touch: missing operand", "err"); return; }
+  const p = norm(name);
+  if (FS[p]){ FS[p].mtime = Date.now(); return; }
+  if (!canWrite(parentOf(p))){ await typeLine(`touch: ${name}: Permission denied`, "err"); return; }
+  write(p, "", S.user);
+  await typeLine(`created ${name}`, "dim");
+};
+CMD.rm = async (arg) => {
+  const name = (arg||"").trim();
+  if (!name){ await typeLine("rm: missing operand", "err"); return; }
+  const p = norm(name);
+  if (!FS[p]){ await typeLine(`rm: cannot remove '${name}': No such file`, "err"); return; }
+  if (!canWrite(p)){ await typeLine(`rm: cannot remove '${name}': Permission denied`, "err"); return; }
+  delete FS[p];
+  const par = parentOf(p);
+  if (FS[par] && FS[par].type === "dir") FS[par].content = FS[par].content.filter(x => x !== baseOf(p));
+  await typeLine(`removed '${name}'`, "warn");
+};
+CMD.nano = async (arg) => {
+  const name = (arg||"").trim();
+  if (!name){ await typeLine("nano: no file", "err"); return; }
+  const n = FS[norm(name)];
+  if (!n || n.type === "dir"){ await typeLine(`nano: ${name}: No such file`, "err"); return; }
+  await typeLine(`--- ${name} ---`, "dim");
+  await typeLines(n.content.split("\n"));
+  await typeLine(`--- EOF ---`, "dim");
+};
+CMD.vim = CMD.nano;
+CMD.less = CMD.nano;
+CMD.more = CMD.nano;
+
+CMD.systemctl = async (arg) => {
+  const s = (arg||"").trim();
+  if (s === "status"){
+    await typeLines(["* void","     State: running","     Jobs: 0 queued","   Failed: 0 units"], "dim");
+  } else if (s === "list-units"){
+    await typeLines([
+      "UNIT              LOAD   ACTIVE SUB",
+      "cron.service      loaded active running",
+      "ssh.service       loaded active running",
+      "systemd-journald  loaded active running"
+    ], "dim");
+  } else await typeLine("systemctl: missing command", "err");
+};
+CMD.journalctl = async () => {
+  await typeLines([
+    "-- Logs begin at Fri 2026-11-07 02:11:00 UTC --",
+    "Nov 07 02:11:04 void kernel: boot",
+    "Nov 07 02:14:22 void sshd[42]: listening on port 22",
+    "Nov 07 02:19:03 void sshd[128]: session opened for anon"
+  ], "dim");
+};
+CMD.crontab = async (arg) => {
+  const s = (arg||"").trim();
+  if (s === "-l"){
+    await typeLines(["# m h dom mon dow user  command",
+      "*/5 * * * * root /usr/local/bin/trace >> /var/log/syslog 2>&1",""], "dim");
+  } else await typeLine("crontab: usage: crontab -l", "err");
+};
+CMD.apt = async (arg) => {
+  const s = (arg||"").trim();
+  if (s.startsWith("list")){
+    await typeLines(["base-files/stable 1.0 amd64","bash/stable 5.2 amd64",
+      "openssh-server/stable 9.3 amd64","nano/stable 7.2 amd64"], "dim");
+  } else if (s.startsWith("install")){
+    await typeLine("apt: install requires root", "err");
+  } else await typeLine("apt: unknown command", "err");
+};
+CMD.dpkg = async (arg) => {
+  const s = (arg||"").trim();
+  if (s === "-l"){
+    await typeLines([
+      "ii  base-files   1.0   amd64  base system",
+      "ii  bash         5.2   amd64  GNU Bourne shell",
+      "ii  openssh      9.3   amd64  SSH client/server",
+      "ii  nano         7.2   amd64  text editor"
+    ], "dim");
+  } else await typeLine("dpkg: usage: dpkg -l", "err");
+};
+CMD.pip = async (arg) => {
+  const s = (arg||"").trim();
+  if (s === "list"){
+    await typeLines(["Package    Version","---------- -------","pip        23.3","setuptools 68.0"], "dim");
+  } else await typeLine("pip: usage: pip list", "err");
+};
+CMD.git = async (arg) => {
+  const s = (arg||"").trim();
+  if (s === "log"){
+    await typeLines([
+      "commit 3f2a1b0 (HEAD -> main)","Author: unknown <unknown@friend.local>",
+      "Date:   Fri Nov 7 02:14:00 2026","","    initial commit"
+    ], "dim");
+  } else await typeLine("git: unknown command", "err");
+};
+CMD.sudo = async (arg) => {
+  if (!arg){ await typeLine("usage: sudo <command>", "err"); return; }
+  if (isRoot()){ await runInternal(arg); return; }
+  if (Date.now() < S.sudoLockedUntil){
+    await typeLine(`sudo: locked for ${Math.ceil((S.sudoLockedUntil-Date.now())/1000)}s`, "err");
+    return;
+  }
+  const pass = await askPassword(`[sudo] password for ${S.user}: `);
+  if (pass === ROOT_PASS){
+    S.sudoUntil = Date.now() + SUDO_TIMEOUT;
+    S.sudoTries = 0;
+    updatePS1();
+    await typeLine("sudo: authenticated", "ok");
+    await runInternal(arg);
+  } else {
+    S.sudoTries++;
+    if (S.sudoTries >= 3){
+      S.sudoLockedUntil = Date.now() + 30000;
+      S.sudoTries = 0;
+      await typeLine("sudo: 3 incorrect password attempts", "err");
+    } else await typeLine("Sorry, try again.", "warn");
+  }
+};
+CMD.su = async (arg) => {
+  const user = (arg||"root").trim();
+  const pass = await askPassword(`Password: `);
+  if (user === "root" && pass === ROOT_PASS){
+    S.user = "root";
+    S.sudoUntil = Date.now() + SUDO_TIMEOUT;
+    updatePS1();
+    await typeLine("root@void:~#", "ok");
+  } else {
+    await typeLine("su: Authentication failure", "err");
+  }
+};
+CMD.history = async () => {
+  if (!S.history.length){ await typeLine("(empty)", "dim"); return; }
+  await typeLines(S.history.map((h,i) => `  ${String(i+1).padStart(4)}  ${h}`), "dim");
+};
+CMD.exit = async () => { await typeLine("logout", "dim"); await typeLine("session closed.", "warn"); };
+
+async function runInternal(line){
+  const parts = line.split("|").map(x => x.trim()).filter(Boolean);
+  if (parts.length > 1){
+    const first = parts[0], second = parts[1];
+    const ft = first.split(/\s+/), st = second.split(/\s+/);
+    const fname = ft[0].toLowerCase(), sname = st[0].toLowerCase();
+    if (fname === "cat" && sname === "base64" && st[1] === "-d"){
+      const n = FS[norm(ft[1]||"")];
+      if (!n){ await typeLine(`cat: ${ft[1]}: No such file`, "err"); return; }
+      try{ await typeLine(atob(n.content.replace(/\s+/g,"")), "ok"); }
+      catch{ await typeLine("base64: invalid input", "err"); }
+      return;
+    }
+    if (fname === "cat" && sname === "grep" && st[1]){
+      const n = FS[norm(ft[1]||"")];
+      if (!n){ await typeLine(`cat: ${ft[1]}: No such file`, "err"); return; }
+      const lines = n.content.split("\n").filter(l => l.includes(st[1]));
+      await typeLines(lines.length ? lines : ["(no matches)"], "ok");
+      return;
+    }
+    await typeLine("pipe: unsupported", "err");
+    return;
+  }
+
+  const tokens = line.split(/\s+/);
+  let name = tokens[0];
+  let arg = tokens.slice(1).join(" ");
+
+  if (S.aliases[name]){
+    const expanded = S.aliases[name] + (arg ? " " + arg : "");
+    const t2 = expanded.split(/\s+/);
+    name = t2[0];
+    arg = t2.slice(1).join(" ");
+  }
+
+  const lname = name.toLowerCase();
+  if (!CMD[lname]){ await typeLine(`${name}: command not found`, "err"); return; }
+
+  sendBtn.disabled = true;
+  try{
+    await withLoad(complexity(lname, arg), () => CMD[lname](arg));
+  }catch(e){
+    await typeLine("shell: internal error", "err");
+  }finally{
+    sendBtn.disabled = false;
+    updatePS1();
+  }
+}
+
+async function run(raw){
+  const line = raw.trim();
+  if (!line) return;
+  S.history.push(line);
+  S.histIdx = S.history.length;
+  const cmdEl = pushLine("", "cmd");
+  cmdEl.textContent = line;
+  await runInternal(line);
+}
+
+let submitting = false;
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  if (submitting) return;
+  submitting = true;
+  const v = input.value;
+  input.value = "";
+  await run(v);
+  input.focus();
+  submitting = false;
 });
 
-window.addEventListener("pagehide", () => { clearAllTimers(); });
+if (window.matchMedia("(hover:hover) and (pointer:fine)").matches){
+  input.focus();
+}
+
+(async () => {
+  await typeLines(["void login: anon (automatic)","",...FS["/etc/motd"].content.split("\n")], "dim");
+})();
+
 })();
 </script>
 </body>
-</html>
+  </html>
